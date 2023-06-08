@@ -49,10 +49,18 @@ CREATE TABLE vets(
 
 
 -- junction tables
+
+BEGIN;
+
+ALTER TABLE animals ADD CONSTRAINT animals_id_unique UNIQUE (id);
+
+COMMIT;
+
 CREATE TABLE visits(
 	id INT GENERATED ALWAYS AS IDENTITY,
 	vet_id INT REFERENCES vets(id),
 	animal_id INT REFERENCES animals(animalid),
+    date DATE,
 	PRIMARY KEY(id)
 );
 
