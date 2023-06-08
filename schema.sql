@@ -38,4 +38,38 @@ ALTER TABLE animals ADD species_id INT REFERENCES species(id);
 
 ALTER TABLE animals ADD owners_id INT REFERENCES owners(id);
 
+-- vets table
+CREATE TABLE vets(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	name varchar(200),
+	age INT,
+    graduation_date DATE,
+	PRIMARY KEY(id)
+);
+
+
+-- junction tables
+
+BEGIN;
+
+ALTER TABLE animals ADD CONSTRAINT animals_id_unique UNIQUE (id);
+
+COMMIT;
+
+CREATE TABLE visits(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	vet_id INT REFERENCES vets(id),
+	animal_id INT REFERENCES animals(animalid),
+    date DATE,
+	PRIMARY KEY(id)
+);
+
+
+CREATE TABLE specializations(
+	id INT GENERATED ALWAYS AS IDENTITY,
+	vet_id INT REFERENCES vets(id),
+	species_id INT REFERENCES species(id),
+	PRIMARY KEY(id)
+);
+
 
